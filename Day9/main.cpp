@@ -30,12 +30,13 @@ int main() {
     std::vector<Position> visited;
 
 #ifdef PART2
-    std::vector<Position> rope(10);
-    visited.push_back(rope.at(9));
+    const uint8_t ropeSize{ 10 };
 #else
-    Position head, tail;
-    visited.push_back(tail);
+    const uint8_t ropeSize{ 2 };
 #endif
+
+    std::vector<Position> rope(ropeSize);
+    visited.push_back(rope.at(rope.size() - 1));
 
 
     while (!in.eof()) {
@@ -44,9 +45,7 @@ int main() {
 
         in >> direction >> amount;
 
-
         for (int i{}; i < amount; i++) {
-#ifdef PART2
             switch (direction) {
                 case 'R':
                     rope.at(0).x++;
@@ -64,7 +63,7 @@ int main() {
                     break;
             }
 
-            for (int j{ 1 }; j < 10; j++) {
+            for (int j{ 1 }; j < rope.size(); j++) {
                 if (rope.at(j).isNextTo(rope.at(j - 1))) {
                     continue;
                 }
@@ -87,53 +86,9 @@ int main() {
                 }
             }
 
-            if (std::find(visited.begin(), visited.end(), rope.at(9)) == visited.end()) {
-                visited.push_back(rope.at(9));
+            if (std::find(visited.begin(), visited.end(), rope.at(rope.size() - 1)) == visited.end()) {
+                visited.push_back(rope.at(rope.size() - 1));
             }
-#else
-            switch (direction) {
-                case 'R':
-                    head.x++;
-                    break;
-                case 'L':
-                    head.x--;
-                    break;
-                case 'U':
-                    head.y++;
-                    break;
-                case 'D':
-                    head.y--;
-                    break;
-                default:
-                    break;
-            }
-
-            if (tail.isNextTo(head)) {
-                continue;
-            }
-
-            if (std::abs(Position::distance(head, tail) - 2) < eps) {
-                tail.x += (head.x - tail.x) / 2;
-                tail.y += (head.y - tail.y) / 2;
-            } else {
-                int64_t move{head.x - tail.x};
-                if (std::abs(move) == 1) {
-                    move = ((move > 0) ? (move + 1) : (move - 1));
-                }
-                tail.x += (move) / 2;
-
-                move = head.y - tail.y;
-                if (std::abs(move) == 1) {
-                    move = ((move > 0) ? (move + 1) : (move - 1));
-                }
-                tail.y += (move) / 2;
-            }
-
-
-            if (std::find(visited.begin(), visited.end(), tail) == visited.end()) {
-                visited.push_back(tail);
-            }
-#endif
         }
     }
 
