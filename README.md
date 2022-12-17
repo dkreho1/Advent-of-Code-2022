@@ -14,4 +14,5 @@ My [Advent of Code 2022](https://adventofcode.com/2022) solutions in the C++ pro
 |Day 8|[Problem](https://adventofcode.com/2022/day/8)|[Solution](Day8/main.cpp)|
 |Day 9|[Problem](https://adventofcode.com/2022/day/9)|[Solution](Day9/main.cpp)|
 |Day 10|[Problem](https://adventofcode.com/2022/day/10)|[Solution](Day10/main.cpp)|
+|Day 11|[Problem](https://adventofcode.com/2022/day/11)|[Solution](Day11/main.cpp)|
 |Day 14|[Problem](https://adventofcode.com/2022/day/14)|[Solution](Day14/main.cpp)|

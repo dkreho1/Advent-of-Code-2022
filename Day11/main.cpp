@@ -78,6 +78,13 @@ int main() {
         monkeys.push_back(monkey);
     }
 
+    uint64_t productOfDivisibleTestNumbers{1};
+    for (const Monkey& monkey : monkeys) {
+        if (productOfDivisibleTestNumbers % monkey.divisibleTestNumber != 0) {
+            productOfDivisibleTestNumbers *= monkey.divisibleTestNumber;
+        }
+    }
+
 #ifdef PART2
     const int numberOfRound{ 10000 };
 #else
@@ -85,9 +92,13 @@ int main() {
 #endif
 
     for (int k{}; k < numberOfRound; k++) {
+        for (Monkey& monkey : monkeys) {
+            for (uint64_t& item : monkey.items) {
+                item %= productOfDivisibleTestNumbers;
+            }
+        }
         for (int i{}; i < monkeys.size(); i++) {
             for (int j{}; j < monkeys.at(i).items.size(); j++) {
-                auto tmp = monkeys.at(i).items.at(j);
                 switch (monkeys.at(i).operation.first) {
                     case Operation::square:
                         monkeys.at(i).items.at(j) *= monkeys.at(i).items.at(j);
@@ -98,10 +109,6 @@ int main() {
                     case Operation::multiply:
                         monkeys.at(i).items.at(j) *= monkeys.at(i).operation.second;
                         break;
-                }
-
-                if (tmp > monkeys.at(i).items.at(j)) {
-                    return -1; // overflow detected
                 }
 
                 monkeys.at(i).inspectedCount++;
